@@ -1,0 +1,50 @@
+@import "../utils/variables";
+
+@mixin media-tablet {
+  @media (min-width: $tablet-width) {
+    @content;
+  }
+}
+
+@mixin media-tablet-h {
+  @media (min-width: $tablet-width-h) {
+    @content;
+  }
+}
+
+@mixin media-desktop {
+  @media (min-width: $desktop-width) {
+    @content;
+  }
+}
+
+@mixin media-custom($width) {
+  @media (min-width: $width) {
+    @content;
+  }
+}
+
+@mixin list-reset {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+@mixin mobile-container {
+  padding-left: $mobile-padding;
+  padding-right: $mobile-padding;
+}
+
+@mixin tablet-container {
+  width: $tablet-width;
+  margin: 0 auto;
+  padding-left: $tablet-padding;
+  padding-right: $tablet-padding;
+}
+
+@mixin desktop-container {
+  width: $desktop-width;
+  margin: 0 auto;
+  padding-left: $desktop-padding;
+  padding-right: $desktop-padding;
+}
