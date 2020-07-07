@@ -172,6 +172,7 @@ exports.server = server
 const dev = gulp.parallel(
   pug2html,
   styles,
+  scripts,
   copy,
   imageMinify,
   sprite,
