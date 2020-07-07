@@ -63,21 +63,21 @@ exports.styles = styles
 
 // Scripts
 
-const scripts = (cb) => {
-  gulp.src("src/js/main.js")
+const scripts = () => {
+  return gulp.src("src/js/main.js")
     .pipe(eslint())
     .pipe(eslint.format())
-    .pipe(sourcemaps.init())
+    .pipe(sourcemap.init())
     .pipe(babel({
       presets: ["@babel/env"]
     }))
     .pipe(terser())
-    .pipe(sourcemaps.write())
+    .pipe(sourcemap.write())
     .pipe(rename({
       suffix: ".min"
     }))
     .pipe(gulp.dest("build/js"))
-  return cb();
+  // return cb();
 }
 
 // Copy
@@ -154,6 +154,7 @@ const server = () => {
     ui: false,
     notify: false,
     open: true,
+    cors: true,
     server: {
       baseDir: "build"
     }
