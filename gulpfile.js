@@ -20,9 +20,8 @@ const svgstore = require("gulp-svgstore")
 const sync = require("browser-sync").create()
 const del = require("del")
 
+const webpack = require('webpack-stream')
 const eslint = require("gulp-eslint")
-const babel = require("gulp-babel")
-const terser = require("gulp-terser")
 
 // HTML
 
@@ -54,7 +53,7 @@ const styles = () => {
     }, details => {
       console.log(`${details.name}: Original size:${details.stats.originalSize} - Minified size: ${details.stats.minifiedSize}`)
     }))
-    .pipe(sourcemap.write("."))
+    .pipe(sourcemap.write())
     .pipe(rename({ suffix: ".min" }))
     .pipe(gulp.dest("build/css"))
 }
@@ -65,20 +64,36 @@ exports.styles = styles
 
 const scripts = () => {
   return gulp.src("src/js/main.js")
+    .pipe(plumber())
     .pipe(eslint())
     .pipe(eslint.format())
     .pipe(sourcemap.init())
-    .pipe(babel({
-      presets: ["@babel/env"]
+    .pipe(webpack({
+      mode: process.env.NODE_ENV,
+      output: {
+        filename: '[name].min.js',
+      },
+      module: {
+        rules: [
+          {
+            test: /\.m?js$/,
+            exclude: /(node_modules|bower_components)/,
+            use: {
+              loader: 'babel-loader',
+              options: {
+                presets: ['@babel/preset-env']
+              }
+            }
+          }
+        ]
+      }
     }))
-    .pipe(terser())
     .pipe(sourcemap.write())
-    .pipe(rename({
-      suffix: ".min"
-    }))
     .pipe(gulp.dest("build/js"))
   // return cb();
 }
+
+exports.scripts = scripts
 
 // Copy
 
@@ -149,7 +164,7 @@ exports.refresh = refresh
 
 // Server
 
-const server = () => {
+const server = (cb) => {
   sync.init({
     ui: false,
     notify: false,
@@ -160,12 +175,14 @@ const server = () => {
     }
   })
 
+  gulp.watch("src/img/**/*.{jpg,png,svg,gif}", gulp.series(imageMinify, towebp, refresh));
   gulp.watch("src/pages/**/*.pug", gulp.series(pug2html, refresh));
   gulp.watch("src/scss/**/*.scss", gulp.series(styles, refresh));
   gulp.watch("src/js/**/*.js", gulp.series(scripts, refresh));
   gulp.watch("src/img/sprite/*.svg", gulp.series(sprite, refresh));
-  gulp.watch("src/img/**/*.{gif,png,jpg,svg)", gulp.series(imageMinify, towebp, refresh));
   gulp.watch("src/fonts/**/*", gulp.series(copy, refresh));
+
+  return cb()
 }
 
 exports.server = server

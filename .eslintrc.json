@@ -22,7 +22,7 @@
           ],
           "quotes": [
             "error",
-            "backtick"
+            "double"
           ]
         }
       }
