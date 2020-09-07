@@ -5,6 +5,11 @@
 ### Installation
 
 ```sh
+$ git clone this-repo-link
+```
+delete .git folder
+
+```sh
 $ npm i
 ```
 
