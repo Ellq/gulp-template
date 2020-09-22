@@ -23,3 +23,9 @@
     @content;
   }
 }
+
+@mixin retina-img {
+  @media (min-resolution: $retina-dpi), (min-resolution: $retina-dppx) {
+    @content;
+  }
+}

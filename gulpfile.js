@@ -4,7 +4,6 @@ const rename = require("gulp-rename")
 const pug = require("gulp-pug")
 const plumber = require("gulp-plumber")
 const pugLinter = require("gulp-pug-linter")
-const htmlValidator = require("gulp-w3c-html-validator")
 const bemValidator = require("gulp-html-bem-validator")
 
 const sass = require("gulp-sass")
@@ -30,7 +29,6 @@ const pug2html = () => {
     .pipe(plumber())
     .pipe(pugLinter({ reporter: "default" }))
     .pipe(pug())
-    .pipe(htmlValidator())
     .pipe(bemValidator())
     .pipe(gulp.dest("build"))
 }
@@ -69,7 +67,7 @@ const scripts = () => {
     .pipe(eslint.format())
     .pipe(sourcemap.init())
     .pipe(webpack({
-      mode: process.env.NODE_ENV,
+      mode: 'none',
       output: {
         filename: '[name].min.js',
       },
