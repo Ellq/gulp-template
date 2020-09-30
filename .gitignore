@@ -13,4 +13,4 @@ node_modules/
 reports/
 
 # Папка с собранными файлами проекта
-# build/
+build/

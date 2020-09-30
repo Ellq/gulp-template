@@ -67,7 +67,7 @@ const scripts = () => {
     .pipe(eslint.format())
     .pipe(sourcemap.init())
     .pipe(webpack({
-      mode: 'none',
+      mode: 'production',
       output: {
         filename: '[name].min.js',
       },
