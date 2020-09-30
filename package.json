@@ -7,6 +7,7 @@
   "license": "ISC",
   "dependencies": {
     "gulp-eslint": "^6.0.0",
+    "jquery": "^3.5.1",
     "normalize.css": "^8.0.1",
     "swiper": "^6.1.2"
   },

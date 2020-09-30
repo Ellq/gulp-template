@@ -22,3 +22,31 @@ img {
 a {
   text-decoration: none;
 }
+
+.font-table {
+  width: 1000px;
+
+  border: 1px solid #000000;
+
+  border-collapse: collapse;
+
+  thead {
+    tr {
+      td {
+        &:nth-child(1) {
+          width: 28%;
+        }
+
+        &:nth-child(n+2) {
+          width: 18%;
+        }
+      }
+    }
+  }
+
+  tr {
+    td {
+      border: 1px solid #000000;
+    }
+  }
+}
