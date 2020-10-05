@@ -175,7 +175,7 @@ const server = (cb) => {
 
   gulp.watch("src/img/**/*.{jpg,png,svg,gif}", gulp.series(imageMinify, towebp, refresh));
   gulp.watch("src/pages/**/*.pug", gulp.series(pug2html, refresh));
-  gulp.watch("src/scss/**/*.{sass,scss}", gulp.series(styles, refresh));
+  gulp.watch("src/sass/**/*.{sass,scss}", gulp.series(styles, refresh));
   gulp.watch("src/js/**/*.js", gulp.series(scripts, refresh));
   gulp.watch("src/img/sprite/*.svg", gulp.series(sprite, refresh));
   gulp.watch("src/fonts/**/*", gulp.series(copy, refresh));
