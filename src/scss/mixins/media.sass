@@ -1,0 +1,25 @@
+@import "../utils/variables"
+
+@mixin media-tablet
+  @media (min-width: $tablet-width)
+    @content
+
+@mixin media-tablet-h
+  @media (min-width: $tablet-width-h)
+    @content
+
+@mixin media-desktop
+  @media (min-width: $desktop-width)
+    @content
+
+@mixin min-w($width)
+  @media (min-width: $width)
+    @content
+
+@mixin max-w($width)
+  @media (max-width: $width)
+    @content
+
+@mixin retina-img
+  @media (min-resolution: $retina-dpi), (min-resolution: $retina-dppx)
+    @content
