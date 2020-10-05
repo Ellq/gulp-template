@@ -38,7 +38,7 @@ exports.pug2html = pug2html
 // Styles
 
 const styles = () => {
-  return gulp.src("src/scss/style.sass")
+  return gulp.src("src/sass/style.sass")
     .pipe(plumber())
     .pipe(sourcemap.init())
     .pipe(sass())
