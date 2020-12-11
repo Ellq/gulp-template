@@ -17,6 +17,7 @@
     "autoprefixer": "^9.8.0",
     "babel-loader": "^8.1.0",
     "browser-sync": "^2.26.12",
+    "css-loader": "^5.0.1",
     "del": "^5.1.0",
     "eslint": "^7.4.0",
     "eslint-config-htmlacademy": "^0.5.2",
