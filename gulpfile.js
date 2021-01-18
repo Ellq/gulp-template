@@ -25,43 +25,58 @@ const eslint = require("gulp-eslint")
 // HTML
 
 const pug2html = () => {
-  return gulp.src("src/pages/*.pug")
+  return gulp
+    .src("src/pages/*.pug")
     .pipe(plumber())
     .pipe(pugLinter({ reporter: "default" }))
-    .pipe(pug())
+    .pipe(
+      pug({
+        pretty: true,
+      })
+    )
     .pipe(bemValidator())
-    .pipe(gulp.dest("build"))
-}
+    .pipe(gulp.dest("build"));
+};
+
+
 
 exports.pug2html = pug2html
 
 // Styles
 
 const styles = () => {
-  return gulp.src("src/sass/style.sass")
+  return gulp
+    .src("src/sass/style.sass")
     .pipe(plumber())
     .pipe(sourcemap.init())
     .pipe(sass())
-    .pipe(postcss([
-      autoprefixer()
-    ]))
-    .pipe(cleanCSS({
-      debug: true,
-      compatibility: "*"
-    }, details => {
-      console.log(`${details.name}: Original size:${details.stats.originalSize} - Minified size: ${details.stats.minifiedSize}`)
-    }))
+    .pipe(postcss([autoprefixer()]))
+    .pipe(
+      cleanCSS(
+        {
+          debug: true,
+          compatibility: "*",
+        },
+        (details) => {
+          console.log(
+            `${details.name}: Original size:${details.stats.originalSize} - Minified size: ${details.stats.minifiedSize}`
+          );
+        }
+      )
+    )
     .pipe(sourcemap.write())
     .pipe(rename({ suffix: ".min" }))
-    .pipe(gulp.dest("build/css"))
-}
+    .pipe(gulp.dest("build/css"));
+};
+
 
 exports.styles = styles
 
 // Scripts
 
 const scripts = () => {
-  return gulp.src("src/js/main.js")
+  return gulp
+    .src("src/js/*.js")
     .pipe(plumber())
     .pipe(eslint())
     .pipe(eslint.format())
@@ -91,9 +106,10 @@ const scripts = () => {
       }
     }))
     .pipe(sourcemap.write())
-    .pipe(gulp.dest("build/js"))
+    .pipe(gulp.dest("build/js"));
   // return cb();
-}
+};
+
 
 exports.scripts = scripts
 
@@ -181,12 +197,16 @@ const server = (cb) => {
     }
   })
 
-  gulp.watch("src/img/**/*.{jpg,png,svg,gif}", gulp.series(imageMinify, towebp, refresh));
+  gulp.watch(
+    "src/img/**/*.{jpg,png,svg,gif}",
+    gulp.series(imageMinify, imageMinifyWebpFolder, towebp, refresh)
+  );
   gulp.watch("src/pages/**/*.pug", gulp.series(pug2html, refresh));
   gulp.watch("src/sass/**/*.{sass,scss}", gulp.series(styles, refresh));
   gulp.watch("src/js/**/*.js", gulp.series(scripts, refresh));
   gulp.watch("src/img/sprite/*.svg", gulp.series(sprite, refresh));
   gulp.watch("src/fonts/**/*", gulp.series(copy, refresh));
+
 
   return cb()
 }
@@ -199,11 +219,13 @@ const dev = gulp.parallel(
   scripts,
   copy,
   imageMinify,
+  imageMinifyWebpFolder,
   sprite,
   towebp
-)
+);
 
-const build = gulp.series(clean, dev)
+const build = gulp.series(clean, dev);
 
-exports.start = gulp.series(build, server)
-exports.build = gulp.series(build)
+exports.start = gulp.series(build, server);
+exports.build = gulp.series(build);
+
