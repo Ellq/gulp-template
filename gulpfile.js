@@ -82,7 +82,11 @@ const scripts = () => {
                 presets: ['@babel/preset-env']
               }
             }
-          }
+          },
+          {
+            test: /\.css$/i,
+            use: ["style-loader", "css-loader"],
+          },
         ]
       }
     }))
@@ -110,25 +114,29 @@ exports.copy = copy
 // Images
 
 const imageMinify = () => {
-  return gulp.src("src/img/**/*.{gif,png,jpg,svg}")
-    .pipe(imagemin([
-      imagemin.gifsicle({ interlaced: true }),
-      imagemin.optipng({ optimizationLevel: 3 }),
-      imagemin.mozjpeg({ progressive: true }),
-      imagemin.svgo()
-    ]))
-    .pipe(gulp.dest("build/img"))
+  return gulp
+    .src(["src/img/**/*.{gif,png,jpg,svg}", "src/webp/*.{gif,png,jpg,svg}"])
+    .pipe(
+      imagemin([
+        imagemin.gifsicle({ interlaced: true }),
+        imagemin.optipng({ optimizationLevel: 3 }),
+        imagemin.mozjpeg({ progressive: true }),
+        imagemin.svgo(),
+      ])
+    )
+    .pipe(gulp.dest("build/img"));
 }
 
 exports.imageMinify = imageMinify
 
 const towebp = () => {
-  return gulp.src("src/img/**/*.{png,jpg}")
-    .pipe(webp({ quality: 90 }))
-    .pipe(gulp.dest("build/img"))
-}
+  return gulp
+    .src("src/img/webp/*.{png,jpg}")
+    .pipe(webp({ quality: 80 }))
+    .pipe(gulp.dest("build/img"));
+};
 
-exports.towebp = towebp
+exports.towebp = towebp;
 
 // Sprite
 
