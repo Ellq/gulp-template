@@ -41,7 +41,7 @@
     "gulp-w3c-html-validator": "^2.0.1",
     "gulp-webp": "^4.0.1",
     "style-loader": "^2.0.0",
-    "stylelint": "^13.5.0",
+    "stylelint": "^15.10.1",
     "stylelint-config-htmlacademy": "^0.1.4",
     "webpack-stream": "^5.2.1"
   },
